@@ -10,7 +10,7 @@ after_success:
   - docker build -t mcreativo/multi-server ./server
   - docker build -t mcreativo/multi-worker ./worker
   - docker build -t mcreativo/multi-nginx ./nginx
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push mcreativo/multi-client
   - docker push mcreativo/multi-server
   - docker push mcreativo/multi-worker
