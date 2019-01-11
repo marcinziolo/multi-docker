@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t marcinziolo/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run marcinziolo/react-test npm test -- --coverage
+after_success:
+  - docker build -t mcreativo/multi-client ./client
+  - docker build -t mcreativo/multi-server ./server
+  - docker build -t mcreativo/multi-worker ./worker
+  - docker build -t mcreativo/multi-nginx ./nginx
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+  - docker push mcreativo/multi-client
+  - docker push mcreativo/multi-server
+  - docker push mcreativo/multi-worker
+  - docker push mcreativo/multi-nginx
